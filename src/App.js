@@ -1,5 +1,7 @@
+import './App.css'
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -8,6 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -34,7 +37,8 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (error) {
-      console.log(error)
+      setErrorMessage('Wrong credentials')
+      setTimeout(() => setErrorMessage(null), 5000)
     }
   }
 
@@ -71,6 +75,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={errorMessage} />
         {loginForm()}
       </div>
     )
@@ -83,6 +88,7 @@ const App = () => {
           Logout
         </button>
       </p>
+      <Notification message={errorMessage} />
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
