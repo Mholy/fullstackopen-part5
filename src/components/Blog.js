@@ -34,7 +34,7 @@ const Blog = ({ blog, likeBlog, removeBlog, createdByUser }) => {
           {showDetails ? 'hide' : 'view'}
         </button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className="blogDetails">
         <div>{blog.url}</div>
         <div>
           {blog.likes}
